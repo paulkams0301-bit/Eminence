@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+<link href="style.css" rel="stylesheet" >
+</head>
+
+<body>
+ <h1>Site de commande d'articles en ligne</h1>
+ <br>
+ <div>
+   <h3>Airpods</h3>
+   <img src="https://i.ibb.co/sdc01N3G/images-12.jpg" alt="images-12" border="0">
+   <p id="prix1">prix: 12000fc</p>
+   <p id="com0"> 0</p>
+   <button id="commande" onclick="commander1()">Commander</button>
+ </div>
+ <br>
+ <div>
+   <h3>Mini- bluetooth speaker</h3>
+<img src="https://i.ibb.co/C5Hg3YbZ/images-9.jpg" alt="images-9" border="0">
+<p id="prix2">prix : 12500fc</p>
+<p id="com1">0</p>
+<button id="commande" onclick="commander2()">commander</button>
+ </div>
+ <br>
+ <div>
+   <h3>Baladeur</h3>
+   <img src="https://i.ibb.co/G4BP4xmj/images-8.jpg" alt="images-8" border="0">
+   <p>prix : 15000fc</p>
+   <p id="com2"> 0</p>
+   <button id="commande" onclick="commander3()">Commander</button>
+ </div>
+ <br>
+ <div>
+   <h3>Écouteur sans fil</h3>
+  <img src="https://i.ibb.co/JWCd8T0d/images-10.jpg" alt="images-10" border="0">
+  <p>prix : 14500fc</p>
+  <p id="com3">0</p>
+  <button id="commande" onclick="commander4()">Commander</button>
+ </div>
+ <a href="commande form.html">
+   <button>Appuiyez ici pour remplir vos coordonnées </button>
+ </a>
+<script>
+  const produits = [
+    { nom: "Airpods", prix: 12000, qte: 0 },
+    { nom: "Mini Bluetooth Speaker", prix: 12500, qte: 0 },
+    { nom: "Baladeur", prix: 15000, qte: 0 },
+    { nom: "Écouteur sans fil", prix: 14500, qte: 0 }
+  ];
+
+  function sauvegarder() {
+    localStorage.setItem("commande", JSON.stringify(produits));
+  }
+
+  function commander1() {
+    produits[0].qte++;
+    document.getElementById("com0").innerText = produits[0].qte;
+    sauvegarder();
+  }
+
+  function commander2() {
+    produits[1].qte++;
+    document.getElementById("com1").innerText = produits[1].qte;
+    sauvegarder();
+  }
+
+  function commander3() {
+    produits[2].qte++;
+    document.getElementById("com2").innerText = produits[2].qte;
+    sauvegarder();
+  }
+
+  function commander4() {
+    produits[3].qte++;
+    document.getElementById("com3").innerText = produits[3].qte;
+    sauvegarder();
+  }
+</script>
+</body>
+
+</html>

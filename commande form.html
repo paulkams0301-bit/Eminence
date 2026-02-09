@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <link href="commande form.css" rel="stylesheet">
+</head>
+
+<body>
+  <h1>Remplissez le formulaire pour envoyer votre commande </h1>
+  <form>
+    <label>
+      Nom <input type="text" name="nom" placeholder="mettez votre nom">
+    </label>
+    <label>
+      <br>
+      <br>
+      Adress <input type="text" name="addresse" placeholder="Masina, Petrocongo/Sans fil">
+    </label>
+    <br>
+    <br>
+    <label>
+      choix du lieu de rendez-vous <select>
+        <option>Coin Lokali</option>
+        <option>Entrée Petrocongo </option>
+        <option>Deux paillotes</option>
+        <option>Marché d'Alivia</option>
+        <option>Quartier 1</option>
+        <option>bâtiment</option>
+        <option>paroisse divin Maître </option>
+        <option>Don Bosco </option>
+        <option>Abbatoir</option>
+      </select>
+    </label>
+    <br>
+    <br>
+    <label>
+      Numéro <input type="number" name="num" placeholder="numéro de téléphone à joindre">
+    </label>
+  </form>
+  <div class="commande"><h4>produits commandés,leurs prix et le total à payer</h4></div>
+  <button id="Envoyez" onclick="Envoyez()">Envoyé sur WhatsApp </button>
+  <script>
+  const zoneCommande = document.querySelector(".commande");
+  const data = localStorage.getItem("commande");
+
+  let produits = [];
+  let total = 0;
+
+  if (data) {
+    produits = JSON.parse(data);
+
+    produits.forEach(p => {
+      if (p.qte > 0) {
+        const sousTotal = p.qte * p.prix;
+        total += sousTotal;
+
+        const ligne = document.createElement("p");
+        ligne.innerText = `${p.nom} (${p.qte}) → ${sousTotal} FC`;
+        zoneCommande.appendChild(ligne);
+      }
+    });
+
+    const totalDiv = document.createElement("h3");
+    totalDiv.innerText = `Total à payer : ${total} FC`;
+    zoneCommande.appendChild(totalDiv);
+  } else {
+    zoneCommande.innerHTML += "<p>Aucun produit commandé</p>";
+  }
+
+  // 🔹 FONCTION ENVOI WHATSAPP
+  function Envoyez() {
+    const nom = document.querySelector('input[name="nom"]').value;
+    const adresse = document.querySelector('input[name="addresse"]').value;
+    const numeroClient = document.querySelector('input[name="num"]').value;
+    const lieu = document.querySelector("select").value;
+
+    if (!nom || !adresse || !numeroClient) {
+      alert("Veuillez remplir tous les champs");
+      return;
+    }
+
+    let message = `📦 *Nouvelle commande* \n\n`;
+    message += `👤 Nom : ${nom}\n`;
+    message += `🏠 Adresse : ${adresse}\n`;
+    message += `📍 Lieu : ${lieu}\n`;
+    message += `📞 Numéro : ${numeroClient}\n\n`;
+    message += `🛒 *Produits commandés* :\n`;
+
+    produits.forEach(p => {
+      if (p.qte > 0) {
+        message += `- ${p.nom} (${p.qte}) : ${p.qte * p.prix} FC\n`;
+      }
+    });
+
+    message += `\n💰 *Total à payer : ${total} FC*`;
+
+    // ⚠️ Numéro WhatsApp du vendeur (sans + ni espace)
+    const numeroVendeur = "243814607870";
+
+    const url = `https://wa.me/${numeroVendeur}?text=${encodeURIComponent(message)}`;
+
+    // 🔥 Ouvre directement WhatsApp
+    window.open(url, "_blank");
+  }
+</script>
+</body>
+
+</html>
